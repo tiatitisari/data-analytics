@@ -70,5 +70,32 @@ The practice and study of collecting and analyzing data
 2. Alternative hypothesis : There's a difference 
 3. Workflow: 
     a. Define the target populations 
-    b. 
+    b. Develop null and alternative hypothesis
+    c. Collect or access sample data 
+    d. Perform statistical test on sample data 
+    e. Draw conclusion 
+4. independent variable : unaffected by other data always in x axis 
+5. dependent variable : affected by other data  
+
+== Experiments ==   
+1. Experiment : Treatment group, control group 
+2. Randomization : Randomly assigned treatment/control without any characteristics. Known as randomized controlled trial. 
+    a. Can be multiple treatment groups 
+    b. A/B testing 
+3. Blinding 
+4. Double-blind randomized controlled trial 
+5. Fewer opportunities for bias == more reliable conclusion about causation 
+
+== Correlation == 
+1. Pearson correlation coefficient : Quantifies the strength of a relationship between two variables, number between minus one and one. Only used for linear relationship 
+2. Correlation not equal causation 
+3. Cofounding variable : not measured but may affect the relationship between variables 
+
+== Interpreting hypothesis test results == 
+1. p- value : probability of achieving this result, assuming the null hypothesis is true 
+2. To reduce the risk of drawing a false conclusion we need to set a probability threshold for rejecting the null hypothesis known as alpha or significance level. Valye 0,05 meaning there's 5% false conclusion. If p-value <= alpha then reject null hypothesis called statistically significant 
+3. Type I/II error 
+    a. Type I Error null hypothesis is True but rejected 
+    b. Type II Error hypothesis is false but we accept null hypothesis 
+
 
