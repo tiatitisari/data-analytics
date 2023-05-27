@@ -1,4 +1,4 @@
-# sql-bootcamp
+# data-analytics
 All things related SQL, PostgreSQL, and Bigquery
 Lesson track 
 1. Understanding Data Visualization
