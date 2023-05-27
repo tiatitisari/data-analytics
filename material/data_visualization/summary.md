@@ -11,7 +11,10 @@ What are best practices for drawing plots?
 == Type of Data ===
 1. Continuous : usually numbers 
 2. Categorical : usually text ( eye colors, countries, industry)
-3. both : e.g time is continues and number depend on question want to answer 
+    a.nominal data -- e.g eye colors 
+    b. ordinal data -- e.g survey strongly agree and disagree 
+3. both : e.g time is continues and number depend on question want to answer
+4. interval 
 
 == Histograms === 
 1. If you have a single continuous variable 
