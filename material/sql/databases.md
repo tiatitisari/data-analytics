@@ -6,6 +6,9 @@
 == SQL == 
 1. Structured Query Language 
 2. The most widely used programming language for databases 
+3. Free and paid, paid one SQL server and oracle
+4. PostgreSQL free and open source relational database system (Limit)
+5. SQL Server to limit using top 
 
 == Tables == 
 1. Table rows == records (unlimited), table columns == fields (limited)
