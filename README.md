@@ -12,4 +12,3 @@ Lesson track
 9. Exploratory Data Analysis in SQL 
 10. Data Driven Decision Makin in SQL 
 11. Data Communication Concepts 
-12.
