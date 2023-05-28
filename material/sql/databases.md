@@ -27,12 +27,13 @@
 == How SQL works == 
 1. SQL is not processed in its written order 
     a. FROM 
-    b. WHERE 
-    c. GROUP BY 
-    d. HAVING
-    e. SELECT
-    f. ORDER BY 
-    g. LIMIT 
+    b. JOIN 
+    c. WHERE 
+    d. GROUP BY 
+    e. HAVING
+    f. SELECT
+    g. ORDER BY 
+    h. LIMIT 
 2. Formatting is not required 
 3. Best practices : 
     a. Keyword capitalization 
