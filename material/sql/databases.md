@@ -23,3 +23,16 @@
     c. NUMERIC to store float data (include fractional part of number)
 2. Schema : Scheme of field type 
 3. Storage : Place to stored data (harddisk of a server/cloud )
+
+== How SQL works == 
+1. SQL is not processed in its written order 
+    a. FROM 
+    b. SELECT 
+    c. LIMIT 
+2. Formatting is not required 
+3. Best practices : 
+    a. Keyword capitalization 
+    b. New line 
+    c. Semicolon at the end of query 
+4. Holywell's style guide: https://www.sqlstyle.guide/
+
