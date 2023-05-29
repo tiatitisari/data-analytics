@@ -32,12 +32,14 @@
     d. GROUP BY 
     e. HAVING
     f. SELECT
-    g. ORDER BY 
-    h. LIMIT 
+    g. WINDOW FUNCTION
+    h. ORDER BY 
+    i. LIMIT 
 2. Formatting is not required 
 3. Best practices : 
     a. Keyword capitalization 
     b. New line 
     c. Semicolon at the end of query 
 4. Holywell's style guide: https://www.sqlstyle.guide/
+5. Windows function available in PostgreSQL, Oracle, MySQL, SQL Server but not SQLite
 
