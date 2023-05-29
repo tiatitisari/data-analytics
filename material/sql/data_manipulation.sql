@@ -829,8 +829,9 @@ ORDER BY
     (home_goal + away_goal) DESC;
 
 --- SLIDING WINDOWS -- calculation running total, running average, running count 
--- ROWS BETWEEN <start> AND <finish> : ## PRECEDING, FOLLOWING (rows before or after the current row that you want to include in calculation)
--- UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING (every rows since the beginning or the end data set in your calculation)
+-- ROWS BETWEEN <start> AND <finish> 
+-- OR RANGE BETWEEN <start> AND <finish>: ## PRECEDING, FOLLOWING (rows before or after the current row that you want to include in calculation)
+--  UNBOUNDED PRECEDING AND UNBOUNDED FOLLOWING (every rows since the beginning or the end data set in your calculation)
 -- CURRENT ROW (stop calculation at the current row )
 SELECT
     date,
