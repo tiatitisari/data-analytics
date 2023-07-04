@@ -43,3 +43,10 @@
 4. Holywell's style guide: https://www.sqlstyle.guide/
 5. Windows function available in PostgreSQL, Oracle, MySQL, SQL Server but not SQLite
 
+== A few reminders == 
+1. NULL >> MISSING DATA 
+2. PUT IS NULL, IS NOT NULL .. DON'T USE = NULL 
+3. COUNT(*) >> COUNTING NUMBER OF ROWS INCLUDING NULL VALUES 
+4. COUNT(column_name) >> COUNTING NUMBER OF NON-NULL VALUES 
+5. COUNT(DISTINCT column_name) >> COUNTING OF DIFFERENT NON-NULL VALUES 
+6. SELECT DISTINCT column_name >> DISTINCT VALUES, INCLUDING NULL 
