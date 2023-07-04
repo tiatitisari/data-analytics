@@ -127,7 +127,6 @@ WHERE
 ---Overview of Basic arithmetic operators--- 
 #####################
 -- AGE() -- will return interval timestamp to timestamp 
-
 SELECT
     f.title,
     f.rental_duration,
@@ -222,71 +221,94 @@ SELECT
 -- DATE_PART(), DATE_TRUNC() , EXTRACT() 
 -- EXTRACT(field FROM source), DATE_PART('field',source)
 -- DATE_TRUNC(month, year, day) -- timestamp
-
-SELECT 
-  -- Extract day of week from rental_date
-  EXTRACT(dow FROM rental_date) AS dayofweek 
-FROM rental 
-LIMIT 100;
+SELECT
+    -- Extract day of week from rental_date
+    EXTRACT(
+        dow
+        FROM
+            rental_date
+    ) AS dayofweek
+FROM
+    rental
+LIMIT
+    100;
 
 -- Extract day of week from rental_date
-SELECT 
-  EXTRACT(dow FROM rental_date) AS dayofweek, 
-  -- Count the number of rentals
-  COUNT(*) as rentals 
-FROM rental 
-GROUP BY 1;
+SELECT
+    EXTRACT(
+        dow
+        FROM
+            rental_date
+    ) AS dayofweek,
+    -- Count the number of rentals
+    COUNT(*) as rentals
+FROM
+    rental
+GROUP BY
+    1;
 
 -- Truncate rental_date by year
-SELECT DATE_TRUNC('year', rental_date) AS rental_year
-FROM rental;
+SELECT
+    DATE_TRUNC('year', rental_date) AS rental_year
+FROM
+    rental;
 
 -- Truncate rental_date by month
-SELECT DATE_TRUNC('month', rental_date) AS rental_month
-FROM rental;
+SELECT
+    DATE_TRUNC('month', rental_date) AS rental_month
+FROM
+    rental;
 
-SELECT 
-  DATE_TRUNC('day', rental_date) AS rental_day,
-  -- Count total number of rentals 
-  COUNT(*) AS rentals 
-FROM rental
-GROUP BY 1;
+SELECT
+    DATE_TRUNC('day', rental_date) AS rental_day,
+    -- Count total number of rentals 
+    COUNT(*) AS rentals
+FROM
+    rental
+GROUP BY
+    1;
 
-SELECT 
-  -- Extract the day of week date part from the rental_date
-  EXTRACT(dow FROM rental_date) AS dayofweek,
-  AGE(return_date, rental_date) AS rental_days
-FROM rental AS r 
-WHERE 
-  -- Use an INTERVAL for the upper bound of the rental_date 
-  rental_date BETWEEN CAST('2005-05-01' AS DATE)
-   AND CAST('2005-05-01' AS DATE) + INTERVAL '90 day';
+SELECT
+    -- Extract the day of week date part from the rental_date
+    EXTRACT(
+        dow
+        FROM
+            rental_date
+    ) AS dayofweek,
+    AGE(return_date, rental_date) AS rental_days
+FROM
+    rental AS r
+WHERE
+    -- Use an INTERVAL for the upper bound of the rental_date 
+    rental_date BETWEEN CAST('2005-05-01' AS DATE)
+    AND CAST('2005-05-01' AS DATE) + INTERVAL '90 day';
 
-SELECT 
-  c.first_name || ' ' || c.last_name AS customer_name,
-  f.title,
-  r.rental_date,
-  -- Extract the day of week date part from the rental_date
-  EXTRACT(dow FROM r.rental_date) AS dayofweek,
-  AGE(r.return_date, r.rental_date) AS rental_days,
-  -- Use DATE_TRUNC to get days from the AGE function
-  CASE WHEN DATE_TRUNC('day', AGE(r.return_date, r.rental_date)) > 
-  -- Calculate number of d
-    f.rental_duration * INTERVAL '1' day 
-  THEN TRUE 
-  ELSE FALSE END AS past_due 
-FROM 
-  film AS f 
-  INNER JOIN inventory AS i 
-  	ON f.film_id = i.film_id 
-  INNER JOIN rental AS r 
-  	ON i.inventory_id = r.inventory_id 
-  INNER JOIN customer AS c 
-  	ON c.customer_id = r.customer_id 
-WHERE 
-  -- Use an INTERVAL for the upper bound of the rental_date 
-  r.rental_date BETWEEN CAST('2005-05-01' AS DATE) 
-  AND CAST('2005-05-01' AS DATE) + INTERVAL '90 day';
+SELECT
+    c.first_name || ' ' || c.last_name AS customer_name,
+    f.title,
+    r.rental_date,
+    -- Extract the day of week date part from the rental_date
+    EXTRACT(
+        dow
+        FROM
+            r.rental_date
+    ) AS dayofweek,
+    AGE(r.return_date, r.rental_date) AS rental_days,
+    -- Use DATE_TRUNC to get days from the AGE function
+    CASE
+        WHEN DATE_TRUNC('day', AGE(r.return_date, r.rental_date)) > -- Calculate number of d
+        f.rental_duration * INTERVAL '1' day THEN TRUE
+        ELSE FALSE
+    END AS past_due
+FROM
+    film AS f
+    INNER JOIN inventory AS i ON f.film_id = i.film_id
+    INNER JOIN rental AS r ON i.inventory_id = r.inventory_id
+    INNER JOIN customer AS c ON c.customer_id = r.customer_id
+WHERE
+    -- Use an INTERVAL for the upper bound of the rental_date 
+    r.rental_date BETWEEN CAST('2005-05-01' AS DATE)
+    AND CAST('2005-05-01' AS DATE) + INTERVAL '90 day';
 
 #####################
 -- Reformatting string and character data 
@@ -296,103 +318,114 @@ WHERE
 -- determine string length and character position 
 -- truncating and padding string data 
 -- Concatenate the first_name and last_name and email 
-
-SELECT first_name ||' '|| last_name ||' <'|| email || '>' AS full_email 
-FROM customer;
+SELECT
+    first_name || ' ' || last_name || ' <' || email || '>' AS full_email
+FROM
+    customer;
 
 -- Concatenate the first_name and last_name and email
-SELECT CONCAT(first_name,' ', last_name,' <', email,'>') AS full_email 
-FROM customer;
-
-SELECT 
-  -- Concatenate the category name to coverted to uppercase
-  -- to the film title converted to title case
-  UPPER(name)  || ': ' || INITCAP(title) AS film_category, 
-  -- Convert the description column to lowercase
-  LOWER(description) AS description
-FROM 
-  film AS f 
-  INNER JOIN film_category AS fc 
-  	ON f.film_id = fc.film_id 
-  INNER JOIN category AS c 
-  	ON fc.category_id = c.category_id;
-
-SELECT 
-  -- Replace whitespace in the film title with an underscore
-  REPLACE(title,' ','_') AS title
-FROM film; 
-
-SELECT 
-  -- Select the title and description columns
-  title,
-  description,
-  -- Determine the length of the description column
-  CHAR_LENGTH(description) AS desc_len,
-  LENGTH(description)
-FROM film;
-
-SELECT 
-  -- Select the first 50 characters of description
-  LEFT(description, 50) AS short_desc
-FROM 
-  film AS f; 
-
-SELECT 
-  -- Select only the street name from the address table
-  SUBSTRING(address FROM POSITION(' ' IN address)+1 FOR CHAR_LENGTH(address))
-  FROM
-  address;
+SELECT
+    CONCAT(first_name, ' ', last_name, ' <', email, '>') AS full_email
+FROM
+    customer;
 
 SELECT
-  -- Extract the characters to the left of the '@'
-  SUBSTRING(email FROM 0 FOR POSITION ('@' IN email)) AS username,
-  -- Extract the characters to the right of the '@'
-  SUBSTRING(email FROM POSITION('@' IN email)+1 FOR CHAR_LENGTH(email)) AS domain
-FROM customer;
+    -- Concatenate the category name to coverted to uppercase
+    -- to the film title converted to title case
+    UPPER(name) || ': ' || INITCAP(title) AS film_category,
+    -- Convert the description column to lowercase
+    LOWER(description) AS description
+FROM
+    film AS f
+    INNER JOIN film_category AS fc ON f.film_id = fc.film_id
+    INNER JOIN category AS c ON fc.category_id = c.category_id;
 
+SELECT
+    -- Replace whitespace in the film title with an underscore
+    REPLACE(title, ' ', '_') AS title
+FROM
+    film;
+
+SELECT
+    -- Select the title and description columns
+    title,
+    description,
+    -- Determine the length of the description column
+    CHAR_LENGTH(description) AS desc_len,
+    LENGTH(description)
+FROM
+    film;
+
+SELECT
+    -- Select the first 50 characters of description
+    LEFT(description, 50) AS short_desc
+FROM
+    film AS f;
+
+SELECT
+    -- Select only the street name from the address table
+    SUBSTRING(
+        address
+        FROM
+            POSITION(' ' IN address) + 1 FOR CHAR_LENGTH(address)
+    )
+FROM
+    address;
+
+SELECT
+    -- Extract the characters to the left of the '@'
+    SUBSTRING(
+        email
+        FROM
+            0 FOR POSITION ('@' IN email)
+    ) AS username,
+    -- Extract the characters to the right of the '@'
+    SUBSTRING(
+        email
+        FROM
+            POSITION('@' IN email) + 1 FOR CHAR_LENGTH(email)
+    ) AS domain
+FROM
+    customer;
 
 -- Concatenate the first_name and last_name 
-SELECT 
-	first_name || LPAD(last_name, LENGTH(last_name)+1) AS full_name
-FROM customer; 
+SELECT
+    first_name || LPAD(last_name, LENGTH(last_name) + 1) AS full_name
+FROM
+    customer;
 
 -- Concatenate the first_name and last_name 
-SELECT 
-	RPAD(first_name, LENGTH(first_name)+1) 
-    || RPAD(last_name, LENGTH(last_name)+2, ' <') 
-    || RPAD(email, LENGTH(email)+1, '>') AS full_email
-FROM customer; 
+SELECT
+    RPAD(first_name, LENGTH(first_name) + 1) || RPAD(last_name, LENGTH(last_name) + 2, ' <') || RPAD(email, LENGTH(email) + 1, '>') AS full_email
+FROM
+    customer;
 
 -- Concatenate the uppercase category name and film title
-SELECT 
-  CONCAT(UPPER(name), ': ', title) AS film_category, 
-  -- Truncate the description remove trailing whitespace
-  TRIM(LEFT(description, 50)) AS film_desc
-FROM 
-  film AS f 
-  INNER JOIN film_category AS fc 
-  	ON f.film_id = fc.film_id 
-  INNER JOIN category AS c 
-  	ON fc.category_id = c.category_id;
+SELECT
+    CONCAT(UPPER(name), ': ', title) AS film_category,
+    -- Truncate the description remove trailing whitespace
+    TRIM(LEFT(description, 50)) AS film_desc
+FROM
+    film AS f
+    INNER JOIN film_category AS fc ON f.film_id = fc.film_id
+    INNER JOIN category AS c ON fc.category_id = c.category_id;
 
-    SELECT 
-  UPPER(c.name) || ': ' || f.title AS film_category, 
-  -- -- Truncate the description without cutting off a word
-  LEFT(description, 50 - 
-  --   -- Subtract the position of the first whitespace character
-    POSITION(
-      ' ' IN REVERSE(LEFT(description, 50))
+SELECT
+    UPPER(c.name) || ': ' || f.title AS film_category,
+    -- -- Truncate the description without cutting off a word
+    LEFT(
+        description,
+        50 - --   -- Subtract the position of the first whitespace character
+        POSITION(
+            ' ' IN REVERSE(LEFT(description, 50))
+        )
     )
-  ) 
-FROM 
-  film AS f 
-  INNER JOIN film_category AS fc 
-  	ON f.film_id = fc.film_id 
-  INNER JOIN category AS c 
-  	ON fc.category_id = c.category_id;
+FROM
+    film AS f
+    INNER JOIN film_category AS fc ON f.film_id = fc.film_id
+    INNER JOIN category AS c ON fc.category_id = c.category_id;
 
-    -- STRPOS
-
+-- STRPOS
 #####################
 -- Introduction to full-text search 
 #####################
@@ -400,38 +433,310 @@ FROM
 -- stemming, spelling mistake, ranking 
 -- Extending PostgreSQL
 -- Improving full text search with extensions 
-
 -- Select all columns
-SELECT *
-FROM film
--- Select only records that begin with the word 'GOLD'
-WHERE title LIKE 'GOLD%';
+SELECT
+    *
+FROM
+    film -- Select only records that begin with the word 'GOLD'
+WHERE
+    title LIKE 'GOLD%';
 
-SELECT *
-FROM film
--- Select only records that end with the word 'GOLD'
-WHERE title LIKE '%GOLD';
+SELECT
+    *
+FROM
+    film -- Select only records that end with the word 'GOLD'
+WHERE
+    title LIKE '%GOLD';
 
-SELECT *
-FROM film
--- Select only records that contain the word 'GOLD'
-WHERE title LIKE '%GOLD%';
+SELECT
+    *
+FROM
+    film -- Select only records that contain the word 'GOLD'
+WHERE
+    title LIKE '%GOLD%';
 
 -- Select the film description as a tsvector
-SELECT to_tsvector(description)
-FROM film;
+SELECT
+    to_tsvector(description)
+FROM
+    film;
 
 -- Select the title and description
-SELECT title, description
-FROM film
--- Convert the title to a tsvector and match it against the tsquery 
-WHERE to_tsvector(title) @@ to_tsquery('elf');
+SELECT
+    title,
+    description
+FROM
+    film -- Convert the title to a tsvector and match it against the tsquery 
+WHERE
+    to_tsvector(title) @ @ to_tsquery('elf');
 
 CREATE TYPE dayofweek AS ENUM('Monday', 'Tuesday');
 
 -- data type E >> Enum 
-CREATE FUNCTION squared(i integer) RETURNS integer AS $$ -- double dollar sign show that the function will be using sql 
-        BEGIN 
-            RETURN i*i: 
-        END; 
-    $$ LANGUAGE plpgsql; 
+CREATE FUNCTION squared(i integer) RETURNS integer AS $ $ -- double dollar sign show that the function will be using sql 
+BEGIN RETURN i * i:
+END;
+
+$ $ LANGUAGE plpgsql;
+
+-- Create an enumerated data type, compass_position
+CREATE TYPE compass_position AS ENUM (
+    -- Use the four cardinal directions
+    'North',
+    'South',
+    'East',
+    'West'
+);
+
+-- Confirm the new data type is in the pg_type system table
+SELECT
+    *
+FROM
+    pg_type
+WHERE
+    typname = 'compass_position';
+
+-- Select the column name, data type and udt name columns
+SELECT
+    column_name,
+    data_type,
+    udt_name
+FROM
+    INFORMATION_SCHEMA.COLUMNS -- Filter by the rating column in the film table
+WHERE
+    table_name = 'film'
+    AND column_name = 'rating';
+
+SELECT
+    *
+FROM
+    pg_type
+WHERE
+    typname = 'mpaa_rating';
+
+-- Select the film title and inventory ids
+SELECT
+    f.title,
+    i.inventory_id
+FROM
+    film AS f -- Join the film table to the inventory table
+    INNER JOIN inventory AS i ON f.film_id = i.film_id;
+
+-- to see USER DEFINED FUNCTION in whole databases 
+SELECT
+    column_name,
+    data_type,
+    udt_name
+FROM
+    INFORMATION_SCHEMA.COLUMNS
+WHERE
+    table_name = 'film';
+
+--- 1 st function creation 
+--#OK, WE NEED TO CALCULATE THE CURRENT BALANCE GIVEN A CUSTOMER_ID AND A DATE
+--#THAT WE WANT THE BALANCE TO BE EFFECTIVE FOR. THE BALANCE IS:
+--#   1) RENTAL FEES FOR ALL PREVIOUS RENTALS
+--#   2) ONE DOLLAR FOR EVERY DAY THE PREVIOUS RENTALS ARE OVERDUE
+--#   3) IF A FILM IS MORE THAN RENTAL_DURATION * 2 OVERDUE, CHARGE THE REPLACEMENT_COST
+--#   4) SUBTRACT ALL PAYMENTS MADE BEFORE THE DATE SPECIFIED
+DECLARE v_rentfees DECIMAL(5, 2);
+
+--#FEES PAID TO RENT THE VIDEOS INITIALLY
+v_overfees INTEGER;
+
+--#LATE FEES FOR PRIOR RENTALS
+v_payments DECIMAL(5, 2);
+
+--#SUM OF PAYMENTS MADE PREVIOUSLY
+BEGIN
+SELECT
+    COALESCE(SUM(film.rental_rate), 0) INTO v_rentfees
+FROM
+    film,
+    inventory,
+    rental
+WHERE
+    film.film_id = inventory.film_id
+    AND inventory.inventory_id = rental.inventory_id
+    AND rental.rental_date <= p_effective_date
+    AND rental.customer_id = p_customer_id;
+
+SELECT
+    COALESCE(
+        SUM(
+            IF(
+                (rental.return_date - rental.rental_date) > (film.rental_duration * '1 day' :: interval),
+                (
+                    (rental.return_date - rental.rental_date) - (film.rental_duration * '1 day' :: interval)
+                ),
+                0
+            )
+        ),
+        0
+    ) INTO v_overfees
+FROM
+    rental,
+    inventory,
+    film
+WHERE
+    film.film_id = inventory.film_id
+    AND inventory.inventory_id = rental.inventory_id
+    AND rental.rental_date <= p_effective_date
+    AND rental.customer_id = p_customer_id;
+
+SELECT
+    COALESCE(SUM(payment.amount), 0) INTO v_payments
+FROM
+    payment
+WHERE
+    payment.payment_date <= p_effective_date
+    AND payment.customer_id = p_customer_id;
+
+RETURN v_rentfees + v_overfees - v_payments;
+
+END;
+
+--- get customer balance 
+--- 2nd function 
+DECLARE v_customer_id INTEGER;
+
+BEGIN
+SELECT
+    customer_id INTO v_customer_id
+FROM
+    rental
+WHERE
+    return_date IS NULL
+    AND inventory_id = p_inventory_id;
+
+RETURN v_customer_id;
+
+END;
+
+--- inventory_held_by_customer
+--- 3rd function 
+DECLARE v_rentals INTEGER;
+
+v_out INTEGER;
+
+BEGIN -- AN ITEM IS IN-STOCK IF THERE ARE EITHER NO ROWS IN THE rental TABLE
+-- FOR THE ITEM OR ALL ROWS HAVE return_date POPULATED
+SELECT
+    count(*) INTO v_rentals
+FROM
+    rental
+WHERE
+    inventory_id = p_inventory_id;
+
+IF v_rentals = 0 THEN RETURN TRUE;
+
+END IF;
+
+SELECT
+    COUNT(rental_id) INTO v_out
+FROM
+    inventory
+    LEFT JOIN rental USING(inventory_id)
+WHERE
+    inventory.inventory_id = p_inventory_id
+    AND rental.return_date IS NULL;
+
+IF v_out > 0 THEN RETURN FALSE;
+
+ELSE RETURN TRUE;
+
+END IF;
+
+END;
+
+-- inventory_in_stock
+-- Select the film title, rental and inventory ids
+SELECT
+    f.title,
+    i.inventory_id,
+    -- Determine whether the inventory is held by a customer
+    inventory_held_by_customer(i.inventory_id) AS held_by_cust
+FROM
+    film as f -- Join the film table to the inventory table
+    INNER JOIN inventory AS i ON f.film_id = i.film_id;
+
+-- Select the film title and inventory ids
+SELECT
+    f.title,
+    i.inventory_id,
+    -- Determine whether the inventory is held by a customer
+    inventory_held_by_customer(i.inventory_id) as held_by_cust
+FROM
+    film as f
+    INNER JOIN inventory AS i ON f.film_id = i.film_id
+WHERE
+    -- Only include results where the held_by_cust is not null
+    inventory_held_by_customer(i.inventory_id) IS NOT NULL;
+
+--- commonly used extenstions in postgresql 
+-- PostGIS
+-- PostPic
+-- fuzzystrmatch 
+-- pg_trgm 
+--- to see available extensions 
+SELECT
+    name
+FROM
+    pg_available_extensions;
+
+-- to see installed extension 
+SELECT
+    extname
+FROM
+    pg_extension;
+
+-- enable the fuzzystrmatch extension 
+CREATE EXTENSION IF NOT EXISTS fuzzystrmatch;
+-- confirm that fuzzystrmatch has been enabled 
+SELECT extname FROM pg_extension;
+
+-- extension in fuzzystrmatch, and pg_trgm 
+-- similarity 
+-- levenshtein
+-- Select the title and description columns
+SELECT 
+  title, 
+  description, 
+  -- Calculate the similarity
+  similarity(title, description) -- degree of similarity 2 is perfect match 1 is less likely match 
+FROM 
+  film; 
+
+  -- Select the title and description columns
+SELECT  
+  title, 
+  description, 
+  -- Calculate the levenshtein distance -- the bigger the distance the farther the string distance between each other
+  levenshtein(title, 'JET NEIGHBOR') AS distance
+FROM 
+  film
+ORDER BY 3; 
+
+-- Select the title and description columns
+SELECT  
+  title, 
+  description 
+FROM 
+  film
+WHERE 
+  -- Match "Astounding Drama" in the description
+  to_tsvector(description) @@ 
+  to_tsquery('Astounding & Drama');
+
+  SELECT 
+  title, 
+  description, 
+  -- Calculate the similarity
+  similarity(description, 'Astounding Drama')
+FROM 
+  film 
+WHERE 
+  to_tsvector(description) @@ 
+  to_tsquery('Astounding & Drama') 
+ORDER BY 
+	similarity(description, 'Astounding Drama') DESC;
