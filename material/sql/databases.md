@@ -50,3 +50,39 @@
 4. COUNT(column_name) >> COUNTING NUMBER OF NON-NULL VALUES 
 5. COUNT(DISTINCT column_name) >> COUNTING OF DIFFERENT NON-NULL VALUES 
 6. SELECT DISTINCT column_name >> DISTINCT VALUES, INCLUDING NULL 
+
+== the key to the database == 
+1. Foreign keys 
+    - reference another row, can be in a different table or the same table 
+    - NULL or unique
+    - via a unique ID 
+    primary key column containing unique, non-NULL values 
+    - values restricted to values in referenced column OR NULL 
+2. Primary Keys have a border around table schema, Primary keys uniquely identify the rows in the table 
+     - unique Key not null 
+
+== data types == 
+- numeric: 
+a. smallint (2 bytes storage size), small-range     integer , -32768 to + 32767
+b. integer (4 bytes), typical choice for integer , -2147483648 to +2147483647
+c. bigint (8 bytes), large-range integer -9223372036854775808 to +9223372036854775807
+d. decimal (variable), user-specified precision, exact up to 131072 digits before the decimal point; up to 16383 digits after the decimal point 
+e.numeric (variable), user-specified precision,exact up to 131072 digits before the decimal point; up to 16383 digits after the decimal point 
+f. real (4 bytes), variable-precision, inexact, 6 decimal digits precision 
+g. double precision (8 bytes), variable-precision, inexact , 15 decimal digits precision
+h. smallserial (2 bytes), small autoincrementing integer, 
+1 to 32767
+i. serial (4 bytes), autoincrementing integer, 
+1 to 2147483647
+j. bigserial (8 bytes), large autoincrementing integer, 1 to 9223372036854775807
+- character 
+- date/time 
+- boolean 
+- arrays 
+- monetary 
+- binary 
+- geometric
+- network address
+- xml 
+- json 
+and more!
