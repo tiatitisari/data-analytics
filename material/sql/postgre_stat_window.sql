@@ -447,7 +447,7 @@ Order by Country ASC;
 #####################
 -- TOTAL AND GRAND TOTAL IN GROUP BY 
 -- ROLLUP is hierarchical, de-aggregating from the leftmost provided column to the right-most 
--- CUBE IS NON-HIERARCHICAL ROLLUP, it generates all possible group-level aggregation 
+--  IS NON-HIERARCHICAL ROLLUP, it generates all possible group-level aggregation 
 
 -- Count the gold medals per country and gender
 SELECT

@@ -86,3 +86,10 @@ j. bigserial (8 bytes), large autoincrementing integer, 1 to 9223372036854775807
 - xml 
 - json 
 and more!
+
+== OLAP ( ON-LINE ANALYTICAL PROCESSING) 
+1. Aggregate data for a better overview 
+2. Produce pivot tables to present aggregation results 
+3. GROUP BY CUBE, ROLLUP, GROUPING SETS . 
+a. CUBE aggregate all possible total while rollup only calculate aggreagation that's mentioned first within Group by. 
+b. Grouping sets : you can define aggregate value which one you want to calculate 
